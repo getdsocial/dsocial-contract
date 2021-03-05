@@ -58,24 +58,28 @@ class [[arisen::contract("dsocialcntrx")]] dsocialcntrx : public contract {
 
     struct [[arisen::table]] repostx {
       uint64_t post_uuid;
+      name reposter;
       uint32_t timestamp;
 
-      uint64_t primary_key()const { return post_uuid; }
+     uint64_t primary_key()const { return post_uuid; }
     };
 
     struct [[arisen::table]] favoritex {
-      uint64_t post_uuid;
-     
-      uint64_t primary_key()const { return post_uuid; }
-    };
+	  uint64_t user;
+  	uint64_t post_uuid;
+  
+  	uint64_t primary_key()const { return post_uuid; }
+	};
 
     struct [[arisen::table]] upvotex {
-      name from;
-      arisen::asset amount;
-      uint32_t timestamp;
-
-      uint64_t primary_key()const { return from.value; }
-      uint64_t upvote_by_r()const { return to.value; }
+    name from;
+    name to;
+    uint64_t post_uuid;
+    arisen::asset amount;
+    uint32_t timestamp;
+  
+    uint64_t primary_key()const { return from.value; }
+    uint64_t upvote_by_r()const { return to.value; }  
     };
 
     struct [[arisen::table]] pinx {
@@ -87,23 +91,27 @@ class [[arisen::contract("dsocialcntrx")]] dsocialcntrx : public contract {
     };
 
     struct [[arisen::table]] hiddenx {
-      uint64_t post_uuid;
-      uint32_t timestamp;
+     name hider;
+     uint64_t post_uuid;
+     uint32_t timestamp;
 
-      uint64_t primary_key()const { return post_uuid; }
-    };
+     uint64_t primary_key()const { return post_uuid; }
+  
+     };
 
     struct [[arisen::table]] followx {
-      name following;
+     name follower;
+     name following;
 
-      uint64_t primary_key()const { return following.value; }
-    };
+     uint64_t primary_key()const { return following.value; }
+     };
 
     struct [[arisen::table]] blockx {
-      name blocked;
-      
-      uint64_t primary_key()const { return user.value; }
-    };
+     name blocker;
+     name blocked;
+
+     uint64_t primary_key()const { return blocked.value; }
+     };
 
     struct [[arisen::table]] statusx {
       name user;
